@@ -1,0 +1,34 @@
+SYNOPSIS
+In the interest of having fewer zipfiles to flash every time I update or change
+the firmware on my Galaxy Nexus, I have created a script to remove stuff I don't
+use and add stuff I do. This script allows you to combine any number of mods in
+a single zipfile. It is intended to be easily extendable by adding additional
+scripts for each feature, like sound enhancements, a custom hosts file, inverted
+apps, the "official" (or another) Google Apps package, and adding or removing
+arbitrary files from /system. This mod uses a script in /system/addon.d to keep
+(and re-apply) changes through firmware updates on compatible ROMs, like CM and
+Slim. I am providing this script in hopes that it will be useful, but there is
+ABSOLUTELY NO WARRANTY.
+
+CONFIGURATION
+Edit the variables, comment out what you don't want, and add what you do. It's
+all up to you. I believe I have explained any quirks for the options; basically
+those are limitations in my knowledge of Unix text processing voodoo (or things
+I just haven't bothered to implement).
+
+DEVICES
+This script was originally intended to work only with the Galaxy Nexus. It has
+been extended for a few devices, BUT THERE IS NO GUARANTEE IT WILL WORK FOR YOU.
+If you want to use it with another device, you will need to change the device
+path for /system in the updater-script and possibly use another updater-binary.
+
+LICENSE
+I am making this script available under the MIT/X11 license, so basically you
+are free to do whatever. If you think you can improve the script for everyone,
+I am quite open to contributions. Below is a list of things I'd like to get to.
+
+TO DO
+* Add support for kernel integration.
+* Add support for "zero" hosts (and test if it's better on Android).
+* Extract native libraries from added apps so they work right.
+* Use inverts from new "Team Black Out" website.
