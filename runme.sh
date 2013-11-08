@@ -40,6 +40,14 @@ fi
 # Set up work area
 
 
+# Load device config
+if test -f "$runme_location/devices/${BASE_DEVICE}.sh"; then
+  source "$runme_location/devices/${BASE_DEVICE}.sh"
+else
+  echo "E: No device config found! MixMod is not compatible with your device!"
+  exit 1
+fi
+
 # Run plugins
 
 
