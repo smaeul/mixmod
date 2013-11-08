@@ -27,6 +27,11 @@ I am making this script available under the MIT/X11 license, so basically you
 are free to do whatever. If you think you can improve the script for everyone,
 I am quite open to contributions. Below is a list of things I'd like to get to.
 
+WRITING PLUGINS
+All exported variables must be namespaced and in all caps. There are three
+reserved namespaces: BASE, DEVICE, and RUNME. You should use your plugin name
+as its namespace.
+
 TO DO
 * Add support for kernel integration.
 * Add support for "zero" hosts (and test if it's better on Android).
