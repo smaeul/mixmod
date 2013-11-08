@@ -29,7 +29,7 @@ runme_location=`dirname "$0"`
 # Load configuration
 if test -f "$runme_location/config.sh"; then
   source "$runme_location/config.sh"
-elif test -f "runme_location/config.default"; then
+elif test -f "$runme_location/config.default"; then
   echo "W: Using default configuration"
   source "$runme_location/config.default"
 else
