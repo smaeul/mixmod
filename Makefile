@@ -72,12 +72,12 @@ ifeq ($(DEVICE_PART_SYSTEM),)
 endif
 
 # Goals
-clean:
-	rm -rf $(CACHE_DIR) $(TMPDIR)
-
 zip: $(ZIPFILE)
 	@rm -rf $(TMPDIR)
 	@echo Zipfile finished: $(ZIPFILE)
+
+clean:
+	rm -rf $(CACHE_DIR) $(TMPDIR)
 
 .PHONY: clean zip
 
