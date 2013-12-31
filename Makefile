@@ -22,13 +22,13 @@
 # Run `make DEVICE=<your_device_codename> zip' to generate your zip.
 
 # Environment
-ANDROID_VERSION	?= 4.4
+ANDROID_VERSION	?= 4.4.2
 CACHE_DIR	?= $(HOME)/.cache/mixmod
 CONFIG_FILE	?= config.mk
 DATE		:= $(shell date +%F)
 DEVICE		?= hammerhead
 DOWNLOAD_CMD	?= wget
-TMPDIR		:= $(shell mktemp -u)
+TMPDIR		?= $(shell mktemp -u)
 
 ALL_DIRS	:= $(CACHE_DIR) $(TMPDIR)
 ALL_PLUGINS	:=
