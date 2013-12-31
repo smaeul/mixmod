@@ -28,9 +28,30 @@ ifeq ($(GAPPS_ENABLED),yes)
 GAPPS_SOURCE	?= pa
 
 ifeq ($(GAPPS_SOURCE),pa)
-  GAPPS_CUSTOM_URL := $(shell echo foobar)
+  ifneq ($(filter 4.4%,$(ANDROID_VERSION)),)
+    gapps_zip := $(CACHE_DIR)/$(shell wget -q "http://goo.im/json2&path=/devs/paranoidandroid/roms/gapps-mini" \
+      -O - | grep -o "pa_gapps-modular-mini-$(ANDROID_VERSION)-[0-9]\{8\}-signed.zip" | sort | tail -n1)
+    GAPPS_CUSTOM_URL := http://goo.im/devs/paranoidandroid/roms/gapps-mini/$(notdir $(gapps_zip))
+  else ifneq ($(filter 4.3%,$(ANDROID_VERSION)),)
+    gapps_zip := $(CACHE_DIR)/pa_gapps-modular-mini-4.3-20131024-signed.zip
+    $(error GAPPS: Unfortunately, 4.3 PA Google Apps are not hosted in a friendly location. Please download them manually \
+	and place them at $(gapps_zip))
+  else
+    $(error GAPPS: PA Google Apps are not available for your Android version.)
+  endif
 else ifeq ($(GAPPS_SOURCE),goo)
-  GAPPS_CUSTOM_URL := gapps-jb-$(shell wget -q 'http://goo.im/json2&action=gapps' -O - | sed 's/.*jb42","ro_version":"\(2013[01][0-9][0-3][0-9]\).*/\1/')-signed.zip
+  ifneq ($(filter 4.3%,$(ANDROID_VERSION)),)
+    GAPPS_CUSTOM_URL := http://goo.im/gapps/gapps-jb-20130813-signed.zip
+  else ifneq ($(filter 4.2%,$(ANDROID_VERSION)),)
+    GAPPS_CUSTOM_URL := http://goo.im/gapps/gapps-jb-20130812-signed.zip
+  else ifneq ($(filter 4.1%,$(ANDROID_VERSION)),)
+    GAPPS_CUSTOM_URL := http://goo.im/gapps/gapps-jb-20121011-signed.zip
+  else ifneq ($(filter 4.0%,$(ANDROID_VERSION)),)
+    GAPPS_CUSTOM_URL := http://goo.im/gapps/gapps-ics-20120429-signed.zip
+  else
+    $(error GAPPS: Goo.im Google Apps are not available for your Android version.)
+  endif
+  gapps_zip := $(CACHE_DIR)/$(notdir $(GAPPS_CUSTOM_URL))
 endif
 
 ifeq ($(GAPPS_CUSTOM_URL),)
@@ -38,7 +59,6 @@ ifeq ($(GAPPS_CUSTOM_URL),)
 endif
 
 gapps_files_dir	:= $(TMPDIR)/gapps_files
-gapps_zip	:= $(CACHE_DIR)/gapps.zip
 
 # Add ourselves to the plugin and directory lists
 ALL_PLUGINS	+= gapps
@@ -46,7 +66,7 @@ ALL_DIRS	+= $(gapps_files_dir)
 
 # Main goal
 gapps: gapps_files | $(SYSTEM_DIR)
-	cp -r $(gapps_files_dir)/* $(SYSTEM_DIR)
+	cp -r $(gapps_files_dir)/system/* $(SYSTEM_DIR)
 
 # Other rules
 # Note: gapps_zip is an order-only dependency so it is not redownloaded
