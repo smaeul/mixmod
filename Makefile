@@ -43,10 +43,10 @@ ALL_DIRS	+= $(BUILD_DIR) $(SYSTEM_DIR) $(BACKUP_DIR) $(UPDATER_DIR)
 
 # Generated files
 BACKUP_SCRIPT	:= $(SYSTEM_DIR)/addon.d/60-mixmod.sh
-UNSIGNED_ZIP	:= $(TMPDIR)/MixMod_unsigned.zip
+UNSIGNED_ZIP	:= $(TMPDIR)/mixmod_unsigned.zip
 UPDATE_BINARY	:= $(UPDATER_DIR)/update-binary
 UPDATER_SCRIPT	:= $(UPDATER_DIR)/updater-script
-ZIPFILE		:= MixMod_$(DEVICE)_$(DATE).zip
+ZIPFILE		:= mixmod_$(DEVICE)_$(DATE).zip
 
 
 # Prebuilt source files
@@ -85,7 +85,7 @@ clean:
 $(ZIPFILE): $(UNSIGNED_ZIP)
 	cp -f $< $@
 
-$(UNSIGNED_ZIP): $(ALL_PLUGINS) $(BACKUP_SCRIPT) $(UPDATER_BINARY) $(UPDATER_SCRIPT)
+$(UNSIGNED_ZIP): $(ALL_PLUGINS) $(BACKUP_SCRIPT) $(UPDATE_BINARY) $(UPDATER_SCRIPT)
 	cd $(BUILD_DIR) && zip -q -r -9 $(UNSIGNED_ZIP) *
 
 $(UPDATE_BINARY): $(UPD_BIN_SRC) | $(UPDATER_DIR)
