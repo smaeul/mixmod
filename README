@@ -10,6 +10,9 @@ arbitrary files from /system. This mod uses a script in /system/addon.d to keep
 Slim. I am providing this script in hopes that it will be useful, but there is
 ABSOLUTELY NO WARRANTY.
 
+USAGE
+Simply run `make DEVICE=<your_device_codename> zip'
+
 CONFIGURATION
 Edit the variables, comment out what you don't want, and add what you do. It's
 all up to you. I believe I have explained any quirks for the options; basically
