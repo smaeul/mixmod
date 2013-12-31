@@ -27,6 +27,9 @@ I am making this script available under the MIT/X11 license, so basically you
 are free to do whatever. If you think you can improve the script for everyone,
 I am quite open to contributions. Below is a list of things I'd like to get to.
 
+Note: Prebuilt binaries may be under different licenses; specifically, anything
+      built from AOSP (update-binary) is under the Apache License 2.0.
+
 WRITING PLUGINS
 All variables must be namespaced by being prefixed with the plugin name. The
 DEVICE namespace is reserved for per-device settings. Some "global" variables
