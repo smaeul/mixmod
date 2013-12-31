@@ -19,8 +19,8 @@ I just haven't bothered to implement).
 DEVICES
 This script was originally intended to work only with the Galaxy Nexus. It has
 been extended for a few devices, BUT THERE IS NO GUARANTEE IT WILL WORK FOR YOU.
-If you want to use it with another device, you will need to change the device
-path for /system in the updater-script and possibly use another updater-binary.
+If you want to use it with another device, you will need to create a device
+definition, including at least the path for the /system partition.
 
 LICENSE
 I am making this script available under the MIT/X11 license, so basically you
@@ -28,12 +28,27 @@ are free to do whatever. If you think you can improve the script for everyone,
 I am quite open to contributions. Below is a list of things I'd like to get to.
 
 WRITING PLUGINS
-All exported variables must be namespaced and in all caps. There are three
-reserved namespaces: BASE, DEVICE, and RUNME. You should use your plugin name
-as its namespace.
+All variables must be namespaced by being prefixed with the plugin name. The
+DEVICE namespace is reserved for per-device settings. Some "global" variables
+will be significant to you; you will probably need to append things to them:
+ALL_DIRS, ALL_PLUGINS, etc. You should gate your plugin behind a variable
+named <plugin>_ENABLED which should be set with ?= to no when it is submitted
+(to help avoid breaking things). Gating behind DEVICE or ANDROID_VERSION for
+limited-compatibility mods also helps. Extracted files go in a directory named
+after your plugin inside TMPDIR. See the existing plugins for examples.
 
 TO DO
-* Add support for kernel integration.
-* Add support for "zero" hosts (and test if it's better on Android).
-* Extract native libraries from added apps so they work right.
-* Use inverts from new "Team Black Out" website.
+* Necessary before considered usable
+  * Updater-script creation (real)
+  * Backup-script creation (real)
+* Other "main modules"
+  * Zip signing
+* Plugins to write
+  * Arbitrary /system add and delete files
+  * Hosts file
+  * Arbitrary apps with lib/ extraction
+  * Inverted apps
+  * Cleared out apps
+  * NexusLouder
+  * Kernel integration
+  * Fix GAPPS
