@@ -29,11 +29,11 @@ GAPPS_SOURCE	?= pa
 
 ifeq ($(GAPPS_SOURCE),pa)
   ifneq ($(filter 4.4%,$(ANDROID_VERSION)),)
-    gapps_zip := $(CACHE_DIR)/$(shell wget -q "http://goo.im/json2&path=/devs/paranoidandroid/roms/gapps-mini" \
+    gapps_zip := $(dir_cache)/$(shell wget -q "http://goo.im/json2&path=/devs/paranoidandroid/roms/gapps-mini" \
       -O - | grep -o "pa_gapps-modular-mini-$(ANDROID_VERSION)-[0-9]\{8\}-signed.zip" | sort | tail -n1)
     GAPPS_CUSTOM_URL := http://goo.im/devs/paranoidandroid/roms/gapps-mini/$(notdir $(gapps_zip))
   else ifneq ($(filter 4.3%,$(ANDROID_VERSION)),)
-    gapps_zip := $(CACHE_DIR)/pa_gapps-modular-mini-4.3-20131024-signed.zip
+    gapps_zip := $(dir_cache)/pa_gapps-modular-mini-4.3-20131024-signed.zip
     $(error GAPPS: Unfortunately, 4.3 PA Google Apps are not hosted in a friendly location. Please download them manually \
 	and place them at $(gapps_zip))
   else
@@ -51,29 +51,36 @@ else ifeq ($(GAPPS_SOURCE),goo)
   else
     $(error GAPPS: Goo.im Google Apps are not available for your Android version.)
   endif
-  gapps_zip := $(CACHE_DIR)/$(notdir $(GAPPS_CUSTOM_URL))
+  gapps_zip := $(dir_cache)/$(notdir $(GAPPS_CUSTOM_URL))
+else
+  gapps_zip := $(dir_cache)/$(notdir $(GAPPS_CUSTOM_URL))
 endif
 
 ifeq ($(GAPPS_CUSTOM_URL),)
   $(error GAPPS: No download URL specified!)
 endif
 
-gapps_files_dir	:= $(TMPDIR)/gapps_files
+# If whitelist is not defined, include everything in /system
+ifneq ($(wildcard $(gapps_zip)),)
+GAPPS_WHITELIST	?= $(shell unzip -l $(gapps_zip) | grep system | cut -d/ -f2-)
+endif
 
-# Add ourselves to the plugin and directory lists
+# Convert list into real paths
+gapps_files	:= $(foreach file,$(GAPPS_WHITELIST),$(dir_system)/$(file))
+
+# Add ourselves to the plugin and download lists
 ALL_PLUGINS	+= gapps
-ALL_DIRS	+= $(gapps_files_dir)
+ALL_DOWNLOADS	+= $(gapps_zip)
 
 # Main goal
-gapps: gapps_files | $(SYSTEM_DIR)
-	cp -r $(gapps_files_dir)/system/* $(SYSTEM_DIR)
+gapps: $(gapps_files)
 
 # Other rules
-# Note: gapps_zip is an order-only dependency so it is not redownloaded
-gapps_files: | $(gapps_zip) $(gapps_files_dir)
-	unzip -qq $(gapps_zip) -d $(gapps_files_dir)
+$(gapps_files): $(dir_system)/%: $(gapps_zip) | $(dir_system)
+	mkdir -p $(dir $@)
+	unzip -qq -o -j $(gapps_zip) -d $(dir $@) system/$*
 
-$(gapps_zip): | $(CACHE_DIR)
-	$(DOWNLOAD_CMD) -O $@ $(GAPPS_CUSTOM_URL)
+$(gapps_zip): | $(dir_cache)
+	wget -O $@ $(GAPPS_CUSTOM_URL)
 
 endif
