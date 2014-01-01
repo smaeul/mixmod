@@ -19,6 +19,7 @@
 # SOFTWARE.
 #
 
+# Run `make DEVICE=<your_device_codename> download' to download prerequisites.
 # Run `make DEVICE=<your_device_codename> zip' to generate your zip.
 
 # Environment
