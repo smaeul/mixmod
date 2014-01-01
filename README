@@ -46,8 +46,6 @@ after your plugin inside TMPDIR. See the existing plugins for examples.
 
 TO DO
 * Necessary before considered usable
-  * Updater-script creation (real)
-  * Backup-script creation (real)
 * Other "main modules"
   * Zip signing
 * Plugins to write

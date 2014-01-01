@@ -1,0 +1,12 @@
+#!/sbin/sh
+#
+# /system/addon.d/20-mevmod.sh
+# During a firmware upgrade, this script backs up MevMod's files.
+# /system is formatted and reinstalled, then the files are restored.
+# Files from the delete list are also removed from the new firmware.
+#
+
+. /tmp/backuptool.functions
+
+list_files() {
+cat <<EOF

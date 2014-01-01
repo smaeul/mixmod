@@ -1,0 +1,5 @@
+  ;;
+  post-restore)
+    list_deletes | while read FILE DUMMY; do
+      rm -f $S/"$FILE"
+    done

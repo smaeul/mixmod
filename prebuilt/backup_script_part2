@@ -1,0 +1,5 @@
+EOF
+}
+
+list_deletes() {
+cat <<EOF
