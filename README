@@ -11,7 +11,8 @@ Slim. I am providing this script in hopes that it will be useful, but there is
 ABSOLUTELY NO WARRANTY.
 
 USAGE
-Simply run `make DEVICE=<your_device_codename> zip'
+First run `make DEVICE=<your_device_codename> download' to download all needed
+files (GAPPS zip, etc.). Then run `make DEVICE=<your_device_codename> zip'.
 
 CONFIGURATION
 Edit the variables, comment out what you don't want, and add what you do. It's
