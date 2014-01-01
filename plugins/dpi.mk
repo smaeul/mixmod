@@ -18,14 +18,19 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 #
-# This file provides configuration options for MixMod. Each setting is prefixed
-# by the name of the plugin it affects. This file is included by make.
+# This plugin uses the backup/updater script to set a custom DPI
 
-# plugins/dpi.mk
-DPI_ENABLED	?= yes
+ifeq ($(DPI_ENABLED),yes)
 
-# plugins/gapps.mk
-GAPPS_ENABLED	?= yes
+# Set default configuration
+DPI_VALUE	?= 400
 
-# plugins/kernel.mk
-KERNEL_ENABLED	?= no
+# Add our line to the backup script
+backup_post_res	+= \
+sed -i -e '/lcd_density/s/[0-9]\{3\}/$(DPI_VALUE)/' /system/build.prop
+
+# Add our line to the updater script
+update_scr_cmds	+= \
+run_program("/system/bin/sed", "-i", "-e", "/lcd_density/s/[0-9]\{3\}/$(DPI_VALUE)/", "/system/build.prop");
+
+endif
