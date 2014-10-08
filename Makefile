@@ -106,7 +106,7 @@ $(update_script): $(ALL_PLUGINS) $(backup_script) | $(dir_update)
 	echo 'ui_print("Configuring...");' >> $@
 	printf "$$update_scr_cmds\n" >> $@
 	echo 'ui_print("Cleaning up...");' >> $@
-	echo 'set_perm(0, 0, 0755, "/system/addon.d/20-mevmod.sh");' >> $@
+	echo 'set_perm(0, 0, 0755, "/system/addon.d/60-mixmod.sh");' >> $@
 	printf "$$update_scr_perm\n" >> $@
 	echo 'set_progress(1.0);' >> $@
 	echo 'ui_print("Done!");' >> $@
