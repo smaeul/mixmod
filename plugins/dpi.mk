@@ -31,6 +31,6 @@ sed -i -e '/lcd_density/s/[0-9]\{3\}/$(DPI_VALUE)/' /system/build.prop
 
 # Add our line to the updater script
 update_scr_cmds	+= \
-run_program("/system/bin/sed", "-i", "-e", "/lcd_density/s/[0-9]\{3\}/$(DPI_VALUE)/", "/system/build.prop");
+run_program("/sbin/sed", "-i", "-e", "/lcd_density/s/[0-9]\{3\}/$(DPI_VALUE)/", "/system/build.prop");
 
 endif
